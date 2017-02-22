@@ -1,0 +1,54 @@
+#ifdef GL_ES
+#define LOWP lowp
+precision mediump float;
+#else
+#define LOWP
+#endif
+
+//"in" attributes from our vertex shader
+varying LOWP vec4 v_color;
+varying vec2 v_texCoords;
+
+//declare uniforms
+uniform sampler2D u_texture;
+uniform float resolution;
+uniform float radius;
+uniform vec2 dir;
+
+void main() {
+
+    //this will be the RGBA sum
+    vec4 sum = vec4(0.0);
+
+    //our original texcoord for this fragment
+    vec2 tc = v_texCoords;
+
+    //the amount to blur, i.e. how far off center to sample from 
+    //1.0 -> blur by one pixel
+    //2.0 -> blur by two pixels, etc.
+    float blur = radius/resolution;
+
+    //the direction of our blur
+    //(1.0, 0.0) -> x-axis blur
+    //(0.0, 1.0) -> y-axis blur
+    float hstep = dir.x;
+    float vstep = dir.y;
+
+    //apply blurring, using a 11-tap filter with predefined gaussian weights
+	sum += texture2D(u_texture, vec2(tc.x - 5.0*blur*hstep, tc.y - 5.0*blur*vstep)) * 0.0093;
+    sum += texture2D(u_texture, vec2(tc.x - 4.0*blur*hstep, tc.y - 4.0*blur*vstep)) * 0.028002;
+    sum += texture2D(u_texture, vec2(tc.x - 3.0*blur*hstep, tc.y - 3.0*blur*vstep)) * 0.065984;
+    sum += texture2D(u_texture, vec2(tc.x - 2.0*blur*hstep, tc.y - 2.0*blur*vstep)) * 0.121703;
+    sum += texture2D(u_texture, vec2(tc.x - 1.0*blur*hstep, tc.y - 1.0*blur*vstep)) * 0.175713;
+
+    sum += texture2D(u_texture, vec2(tc.x, tc.y)) * 0.198596;
+
+    sum += texture2D(u_texture, vec2(tc.x + 1.0*blur*hstep, tc.y + 1.0*blur*vstep)) * 0.175713;
+    sum += texture2D(u_texture, vec2(tc.x + 2.0*blur*hstep, tc.y + 2.0*blur*vstep)) * 0.121703;
+    sum += texture2D(u_texture, vec2(tc.x + 3.0*blur*hstep, tc.y + 3.0*blur*vstep)) * 0.065984;
+    sum += texture2D(u_texture, vec2(tc.x + 4.0*blur*hstep, tc.y + 4.0*blur*vstep)) * 0.028002;
+    sum += texture2D(u_texture, vec2(tc.x + 5.0*blur*hstep, tc.y + 5.0*blur*vstep)) * 0.0093;
+
+    //discard alpha for our simple demo, multiply by vertex color and return
+    gl_FragColor = v_color * sum;
+}
