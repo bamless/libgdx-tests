@@ -54,7 +54,7 @@ project(":android") {
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        compile "aurelienribon.tweenengine:tween:6.3.3"
+        compile "aurelienribon:tweenengine:6.3.3"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
@@ -74,7 +74,7 @@ project(":ios") {
         compile "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
         compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
-		compile "aurelienribon.tweenengine:tween:6.3.3"
+		compile "aurelienribon:tweenengine:6.3.3"
     }
 }
 
@@ -96,7 +96,7 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-		compile "aurelienribon.tweenengine:tween:6.3.3"
+		compile "aurelienribon:tweenengine:6.3.3"
     }
 }
 
