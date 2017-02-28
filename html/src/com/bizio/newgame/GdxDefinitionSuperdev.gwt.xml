@@ -5,6 +5,8 @@
 
     <inherits name='com.bizio.newgame.GdxDefinition' />
     
+    <inherits name='aurelienribon.tweenengine'/>
+    
     <collapse-all-properties />
     
 	<add-linker name="xsiframe"/>	
