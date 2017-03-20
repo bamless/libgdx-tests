@@ -6,25 +6,26 @@ varying vec4 v_color;
 varying vec2 v_texCoords;
 
 uniform sampler2D u_texture;
-//The center (in screen coordinates) of he blur
+//The center (in screen coordinates) of the blur
 uniform vec2 cent;
 
 //these things should be uniforms but nonmeva'
-const float blurStart = 1.0; /// blur offset
-const float blurWidth = -0.85; ///how big it should be
-const int nsamples = 100;
+const float blurWidth = -0.85;
+//the number of samples
+#define NUM_SAMPLES 100
 
 void main() {
-	vec2 tc = v_texCoords;
-	tc -= cent;
+	//compute vector from pixel to blur center 
+	vec2 tc = v_texCoords - cent;
+	//output color
+	vec3 color = vec3(0.0);
 	
-	//return vector
-	vec4 c = vec4(0.0, 0.0, 0.0, 0.0);
-	
-	for(int i=0; i < nsamples; i++) {
-    	float scale = blurStart + blurWidth * (float(i) / (float(nsamples -1)));
-    	c += texture2D(u_texture, tc * scale + cent);
-   	}
-	
-	gl_FragColor = c/float(nsamples);
+	//sample the texture NUM_SAMPLES times
+	for(int i = 0; i < NUM_SAMPLES; i++) {
+		//sample the texture on the pixel-to-center line getting closer to the center every iteration
+    	float scale = 1.0 + blurWidth * (float(i) / float(NUM_SAMPLES - 1));
+    	color += texture2D(u_texture, (tc * scale) + cent).xyz;
+  	}
+	//normalize the pixel final color
+	gl_FragColor = vec4(color / float(NUM_SAMPLES), 1.0);
 }
