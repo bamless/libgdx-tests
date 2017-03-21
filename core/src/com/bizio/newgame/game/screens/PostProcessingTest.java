@@ -60,12 +60,13 @@ public class PostProcessingTest extends AbstractScreen {
 
 	@Override
 	public void show() {
-		bg = new Entity("bg1.jpg");
-		bg2 = new Entity("sky.png");
+		bg = new Entity("sky.jpg");
+		bg2 = new Entity("bg1.jpg");
 		bg2.setCoords(720, 0);
 		tree = new Entity("tree.png");
 		sun = new Sun(0, 0, camera);
 		sun.setCoords(NewGame.getWidth() / 2 - sun.getWidth() / 2, NewGame.getHeight() / 2);
+		//SUNSET sun.setColor(255/255f, 168/255f, 87/255f);
 		
 		lightShafts = new LightShaftsRenderer(4);
 

@@ -34,7 +34,10 @@ public class Sun extends Entity {
 	
 	@Override
 	public void render(SpriteBatch batch) {
+		Color old = batch.getColor();
+		batch.setColor(color);
 		batch.draw(texture, getX(), getY());
+		batch.setColor(old);
 	}
 	
 	public void setColor(float r, float g, float b) {
