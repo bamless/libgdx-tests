@@ -7,8 +7,9 @@ varying vec2 v_texCoords;
 
 uniform sampler2D u_texture;
 
-const float p = 0.005;
+// Be gentle on this one
 const vec2 center = vec2(0.5, 0.5);
+const float p = 0.01;
 
 void main() {
 	vec2 diff = center - v_texCoords;
