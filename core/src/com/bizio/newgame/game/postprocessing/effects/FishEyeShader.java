@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class FishEyeShader extends ShaderProgram {
 
-	private final static String VERT = "shaders/fisheye.vert";
+	public final static String VERT = "shaders/default.vert";
 	private final static String FRAG = "shaders/fisheye.frag";
 
 	public FishEyeShader() {

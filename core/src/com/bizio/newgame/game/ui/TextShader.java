@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class TextShader extends ShaderProgram {
 	
-	private static final String VERT = "shaders/font.vert";
+	public final static String VERT = "shaders/default.vert";
 	private static final String FRAG = "shaders/font.frag";
 	
 	private static final String U_SCALE = "scale";

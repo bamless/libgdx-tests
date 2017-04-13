@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class OccluderShader extends ShaderProgram {
 	
-	private static final String VERT = "shaders/lightshaft.vert";
+	public final static String VERT = "shaders/default.vert";
 	private final static String FRAG = "shaders/lightshaft.frag";
 	
 	private final static String U_COLOR = "color";

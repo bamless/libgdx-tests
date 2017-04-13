@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class CRTShader extends ShaderProgram {
 
-	public static final String VERT = "shaders/crt.vert";
+	public final static String VERT = "shaders/default.vert";
 	public final static String FRAG = "shaders/crt.frag";
 
 	public CRTShader() {

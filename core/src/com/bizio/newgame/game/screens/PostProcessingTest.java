@@ -19,6 +19,7 @@ import com.bizio.newgame.game.postprocessing.PostProcessFBO;
 import com.bizio.newgame.game.postprocessing.PostProcessing;
 import com.bizio.newgame.game.postprocessing.effects.BlurStep;
 import com.bizio.newgame.game.postprocessing.effects.CRTStep;
+import com.bizio.newgame.game.postprocessing.effects.WarpStep;
 import com.bizio.newgame.game.ui.TextLabel;
 import com.bizio.newgame.game.ui.TextRenderer;
 
@@ -44,6 +45,7 @@ public class PostProcessingTest extends AbstractScreen {
 	private LightShaftsRenderer lightShafts;
 	private CRTStep crtStep;
 	private BlurStep blurStep;
+	private WarpStep warpStep;
 	private PostProcessFBO fbo;
 	private PostProcessing pp;
 
@@ -76,6 +78,8 @@ public class PostProcessingTest extends AbstractScreen {
 		pp = new PostProcessing();
 		crtStep = new CRTStep();
 		blurStep = new BlurStep(8);
+		warpStep = new WarpStep();
+		pp.addPostProcessingStep(warpStep);
 		
 		textRenderer = new TextRenderer();
 		fps = new TextLabel("00", 0, NewGame.getHeight());
@@ -192,5 +196,6 @@ public class PostProcessingTest extends AbstractScreen {
 		lightShafts.dispose();
 		crtStep.dispose();
 		blurStep.dispose();
+		warpStep.dispose();
 	}
 }

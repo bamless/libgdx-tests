@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class BlurShader extends ShaderProgram {
 	
-	private static final String VERT = "shaders/blur.vert";
+	public final static String VERT = "shaders/default.vert";
 	private static final String FRAG = "shaders/blur.frag";
 	
 	private static final String U_RESOLUTION = "resolution";

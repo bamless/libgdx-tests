@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class RadialBlurShader extends ShaderProgram {
 
-	private static final String VERT = "shaders/radial.vert";
+	public final static String VERT = "shaders/default.vert";
 	private final static String FRAG = "shaders/radial.frag";
 	
 	private static final String U_CENTER = "cent";

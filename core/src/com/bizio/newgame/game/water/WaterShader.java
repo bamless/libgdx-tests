@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 public class WaterShader extends ShaderProgram {
 	
-	private final static String VERT = "shaders/water.vert";
+	public final static String VERT = "shaders/default.vert";
 	private final static String FRAG = "shaders/water.frag";
 	
 	private static final String U_TIMEDELTA = "timedelta";
