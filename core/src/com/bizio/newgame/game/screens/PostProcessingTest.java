@@ -79,7 +79,7 @@ public class PostProcessingTest extends AbstractScreen {
 		crtStep = new CRTStep();
 		blurStep = new BlurStep(8);
 		warpStep = new WarpStep();
-		pp.addPostProcessingStep(warpStep);
+		//pp.addPostProcessingStep(warpStep);
 		
 		textRenderer = new TextRenderer();
 		fps = new TextLabel("00", 0, NewGame.getHeight());
