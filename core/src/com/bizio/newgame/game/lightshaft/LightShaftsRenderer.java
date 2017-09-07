@@ -19,22 +19,22 @@ import com.bizio.newgame.game.postprocessing.PostProcessFBO;
 public class LightShaftsRenderer implements Disposable {
 
 	private PostProcessFBO occludersFBO;
-	private PostProcessFBO radialBlur;
+	private PostProcessFBO occlusionApprox;
 	
 	private OccluderShader occluderShader;
-	private RadialBlurShader radialBlurShader;
+	private OcclusionApproxShader occlusionApproxShader;
 	
 	/** Projection matrix used during the blurring*/
 	private Matrix4 blurProj;
 	
 	public LightShaftsRenderer(int downScalingFactor) {
 		occludersFBO = new PostProcessFBO(Format.RGBA8888, NewGame.getWidth()/downScalingFactor, NewGame.getHeight()/downScalingFactor, false);
-		radialBlur = new PostProcessFBO(Format.RGB888, NewGame.getWidth()/downScalingFactor, NewGame.getHeight()/downScalingFactor, false);
+		occlusionApprox = new PostProcessFBO(Format.RGB888, NewGame.getWidth()/downScalingFactor, NewGame.getHeight()/downScalingFactor, false);
 		occludersFBO.getColorBufferTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		radialBlur.getColorBufferTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		occlusionApprox.getColorBufferTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		occluderShader = new OccluderShader();
-		radialBlurShader = new RadialBlurShader();
+		occlusionApproxShader = new OcclusionApproxShader();
 		
 		blurProj = new Matrix4().setToOrtho2D(0, 0, NewGame.getWidth(), NewGame.getHeight());
 	}
@@ -44,7 +44,7 @@ public class LightShaftsRenderer implements Disposable {
 		// Renders the occluders in black over the white sun
 		renderBlackOccluders(batch, occluders, sun);
 		// Applies radial blur in order to obtain the "lightshaft" effect
-		applyRadialBlur(batch, sun);
+		applyOcclusionApprox(batch, sun);
 		
 		// cleanup and reset operations
 		viewPort.apply();
@@ -77,22 +77,22 @@ public class LightShaftsRenderer implements Disposable {
 		occludersFBO.end();
 	}
 	
-	private void applyRadialBlur(SpriteBatch batch, Sun sun) {
-		radialBlur.begin();
+	private void applyOcclusionApprox(SpriteBatch batch, Sun sun) {
+		occlusionApprox.begin();
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		
 		batch.disableBlending();
 		batch.setProjectionMatrix(blurProj);
-		batch.setShader(radialBlurShader);
+		batch.setShader(occlusionApproxShader);
 		batch.begin();
-		radialBlurShader.setCenter(sun.getNormalizedScreenX(), sun.getNormalizedScreenY());
 		
+		occlusionApproxShader.setCenter(sun.getNormalizedScreenX(), sun.getNormalizedScreenY());
 		occludersFBO.draw(batch);
 		
 		batch.end();
-		radialBlur.end();
+		occlusionApprox.end();
 	}
 	
 	/** Renders the lightshafts using additive blending*/
@@ -103,7 +103,7 @@ public class LightShaftsRenderer implements Disposable {
         batch.setProjectionMatrix(blurProj);
 		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
 				
-		radialBlur.draw(batch);
+		occlusionApprox.draw(batch);
 		
 		batch.setBlendFunction(oldSrcFunc, oldDstFunc);
 		batch.setProjectionMatrix(oldProj);
@@ -112,9 +112,9 @@ public class LightShaftsRenderer implements Disposable {
 	@Override
 	public void dispose() {
 		occludersFBO.dispose();
-		radialBlur.dispose();
+		occlusionApprox.dispose();
 		occluderShader.dispose();
-		radialBlurShader.dispose();
+		occlusionApproxShader.dispose();
 	}
 
 }
